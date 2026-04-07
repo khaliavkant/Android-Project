@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MenuActivity : AppCompatActivity() {
@@ -39,16 +38,19 @@ class MenuActivity : AppCompatActivity() {
             finish()
         }
 
+        // ВИПРАВЛЕНО: Тепер відкриває екран завдань
         btnTasks.setOnClickListener {
             startActivity(Intent(this, TasksActivity::class.java))
         }
 
+        // Відкриває екран категорій
         btnCategories.setOnClickListener {
-            Toast.makeText(this, "Тут будуть категорії!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, CategoriesActivity::class.java))
         }
 
+        // Відкриває екран профілю
         btnProfile.setOnClickListener {
-            Toast.makeText(this, "Тут будуть налаштування профілю!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 }

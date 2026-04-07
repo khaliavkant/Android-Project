@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TasksActivity : AppCompatActivity() {
 
-    // Створюємо стартовий список з 10 елементів
+    // Наш стартовий список
     private val taskList = mutableListOf(
         "Купити молоко та хліб",
         "Підготуватися до пари з програмування",
@@ -31,39 +31,27 @@ class TasksActivity : AppCompatActivity() {
         val adapter = TaskAdapter(taskList)
         rvTasks.adapter = adapter
 
-        // Знаходимо нашу кнопку "+"
+        // Відновлена логіка кнопки "+"
         val fabAddTask = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabAddTask)
 
-        // Вішаємо слухач натискань
         fabAddTask.setOnClickListener {
-            // Створюємо спливаюче вікно
             val builder = android.app.AlertDialog.Builder(this)
             builder.setTitle("Нове завдання")
 
-            // Створюємо поле для вводу тексту
             val input = android.widget.EditText(this)
             input.hint = "Що плануєте зробити?"
             builder.setView(input)
 
-            // Кнопка "Додати"
             builder.setPositiveButton("Додати") { dialog, _ ->
                 val newTask = input.text.toString()
                 if (newTask.isNotEmpty()) {
-                    // Додаємо в наш список
-                    taskList.add(newTask)
-                    // Кажемо адаптеру, що з'явився новий елемент у кінці
-                    adapter.notifyItemInserted(taskList.size - 1)
-                    // Прокручуємо список до самого низу, щоб побачити нове завдання
-                    rvTasks.scrollToPosition(taskList.size - 1)
+                    taskList.add(newTask) // Додаємо в пам'ять
+                    adapter.notifyItemInserted(taskList.size - 1) // Оновлюємо список
+                    rvTasks.scrollToPosition(taskList.size - 1) // Гортаємо вниз
                 }
             }
 
-            // Кнопка "Скасувати"
-            builder.setNegativeButton("Скасувати") { dialog, _ ->
-                dialog.cancel()
-            }
-
-            // Показуємо вікно
+            builder.setNegativeButton("Скасувати") { dialog, _ -> dialog.cancel() }
             builder.show()
         }
     }
